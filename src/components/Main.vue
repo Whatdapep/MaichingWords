@@ -9,8 +9,8 @@
     <div id="wordsOutput">
       {{ outputWords }}
     </div>
-
-    <TableResult v-bind:props="outputWords" />
+<li v-for="n in outputWords" v-bind:key="n">{{ n }}</li>
+    <TableResult v-bind:outputWords="outputWords" />
   </div>
 </template>
 <script>
@@ -23,17 +23,26 @@ TableResult
   data: function () {
     return {
       words: '',
-      outputWords: ''
+      outputWords: '',
+      isData:false
     }
   },
   methods: {
     HandlerWordsClick: function () {
       var propArr = this.words.split(' ')
     //   var c_count = propArr.length
-
+      this.isData = true;
       this.outputWords = propArr
     }
-  }
+  }, 
+  // computed:{
+  //     Wordings: function () {
+  //   return this.outputWords;
+  //   // .filter(function (number) {
+  //   //   return number % 2 === 0
+  //   // })
+  // }
+  // }
 }
 </script>
 <style scoped></style>

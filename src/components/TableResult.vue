@@ -1,9 +1,9 @@
 <template>
     <table>
     <tbody>
-    <v-fo></v-fo>
-    <tr v-for="result in props" v-bind:key="result" >
-    {{result}}
+<!-- v-for="result in props" v-bind:key="result" -->
+    <tr v-for="n in outputWords" v-bind:key="n" >
+    {{n}}
     </tr>
     </tbody>
     </table>
@@ -14,12 +14,12 @@ export default {
     data:function ()
     {
         return {
-            props:null,
+            outputWords:null,
 
         }
     }
     ,
-    props:['props']
+    props:['outputWords']
 }
 </script>
 <style scoped>
