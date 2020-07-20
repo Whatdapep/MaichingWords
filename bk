@@ -13,7 +13,7 @@
     <div class="col-6">
     <label for="word">insert Words Matching Right&nbsp;</label>
     <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-    name="word2" v-model="word2" id="word2" />
+    name="words2" v-model="words2" id="words2" />
     <button type="button" @click="HandlerWordsClickRight">
       Ok
     </button>
@@ -22,11 +22,8 @@
     <!-- <div id="wordsOutput">
       {{ outputWords }}
     </div> -->
-    <div class="container grid">
-     <div v-if="isDataRight">
-     <button> เทียบข้อมูล </button>
-     </div>
-    <div class="grid grid-cols-4">
+    <div class="container">
+    <div class="grid-cols-6">
     
     
     <div v-if="isDataLeft">
@@ -57,33 +54,9 @@
 </div>
    
 
-      <div class="grid grid-cols-4">
+      <div class="grid-cols-6">
     
-        <div v-if="isDataRight">
-   
-       <span>จำนวนแถวทั้งหมด  {{ outputWordsRight.countrow}} </span>
-        <table>
-        <thead>
-          <th><td>row</td></th>
-           <th v-for="n in columnName" v-bind:key="n.key">
-          <td> {{n.columnName}} </td>
-          </th>
-        </thead>
-        <tbody>
-        <tr v-for="n in outputWordsRight.arr_data" v-bind:key="n.key">
-        <td> {{n.key+1}} </td>
-        <td> {{n.column1}} </td>
-        <td> {{n.column2}} </td>
-        <td> {{n.column3}} </td>
-        <td> {{n.column4}} </td>
-        <td> {{n.column5}} </td>
-        <td> {{n.column6}} </td>
-        <td> {{n.column7}} </td>
-        <td> {{n.column8}} </td>
-        </tr>
-        </tbody>
-        </table>
-        </div>
+      
     </div>
      </div>
     <!-- <TableResult v-bind:outputWords="outputWords" /> -->
@@ -99,11 +72,10 @@ export default {
   data: function () {
     return {
       words: '',
-       word2: '',
+       words2: '',
        countColumn:0,
+      countColumn2:0,
        columnName:[],
-       countColumn2:0,
-       columnName2:[],
        Mycolumn1:"column1",
       outputWordsLeft: {
         data: '',
@@ -116,11 +88,7 @@ export default {
         arr_data:[],
       },
       isDataLeft: false,
-       isDataRight: false,
-
-      //  ตัวแปลเทียบข้อมูล
-
-      
+       isDataRight: false
     }
   },
   methods: {
@@ -159,54 +127,53 @@ export default {
         }
       }
       console.log(arr_result);
-      this.outputWordsLeft.arr_data = arr_result;
-      this.outputWordsLeft.countrow = propArr.length
-      this.outputWordsLeft.data = propArr
-       this.isDataLeft = true
-    },
-
-    HandlerWordsClickRight: function()
-    {
-            var propArr = this.word2.split(' ')
-      let arr_result = [];
-      let ColumnCount = 0;
-       ColumnCount = propArr[0].split("	").length;
-      this.countColumn2 =ColumnCount;
-
-      for(let i=0;i<ColumnCount;i++)
-      {
-          this.columnName2.push({"key":i,"columnName":`column${i+1}`})
-      }
-      for(let i =0;i<propArr.length;i++)
-      {
-      if(ColumnCount > 1)
-      {
-        let multicloumn = propArr[i].split("	");
-        for (let c=-1;c<ColumnCount;c++)
-        {
-          if(c == -1)
-          {
-          arr_result[i]={"key":i};
-          }else
-          {
-            let text = "column"+(c+1);
-            let scopeArr = {[text]:multicloumn[c]};
-            arr_result[i] = {...arr_result[i],...scopeArr};
-          }
-        }
-      }
-      else
-      {
-        arr_result.push({"key":i,"column1":propArr[i]});
-        }
-      }
-      console.log(arr_result);
       this.outputWordsRight.arr_data = arr_result;
       this.outputWordsRight.countrow = propArr.length
       this.outputWordsRight.data = propArr
        this.isDataRight = true
-    }
-  }
+    },
+
+  //   HandlerWordsClickRight: function()
+  //   {
+  //     var propArr = this.words2.split(' ')
+  //     let arr_result = [];
+  //     let ColumnCount = 0;
+  //      ColumnCount = propArr[0].split("	").length;
+  //     this.countColumn2 =ColumnCount;
+
+  //     for(let i=0;i<ColumnCount;i++)
+  //     {
+  //         this.columnName2.push({"key":i,"columnName":`column${i+1}`})
+  //     }
+  //     for(let i =0;i<propArr.length;i++)
+  //     {
+  //     if(ColumnCount > 1)
+  //     {
+  //       let multicloumn = propArr[i].split("	");
+  //       for (let c=-1;c<ColumnCount;c++)
+  //       {
+  //         if(c == -1)
+  //         {
+  //         arr_result[i]={"key":i};
+  //         }else
+  //         {
+  //           let text = "column"+(c+1);
+  //           let scopeArr = {[text]:multicloumn[c]};
+  //           arr_result[i] = {...arr_result[i],...scopeArr};
+  //         }
+  //       }
+  //     }
+  //     else
+  //     {
+  //       arr_result.push({"key":i,"column1":propArr[i]});
+  //       }
+  //     }
+  //     console.log(arr_result);
+  //     this.outputWordsLeft.arr_data = arr_result;
+  //     this.outputWordsLeft.countrow = propArr.length
+  //     this.outputWordsLeft.data = propArr
+  //      this.isDataLeft = true
+  // },
   // computed:{
   //     Wordings: function () {
   //   return this.outputWords;
