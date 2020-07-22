@@ -88,6 +88,31 @@
           </table>-->
         </div>
       </div>
+           <div class="grid grid-cols-4">
+        <div v-if="isMatching">
+           <table>
+        <thead>
+          <th><td>row</td></th>
+           <th v-for="n in columnName" v-bind:key="n.key">
+          <td> {{n.columnName}} </td>
+          </th>
+        </thead>
+        <tbody>
+        <tr v-for="n in resultMatchingright.arr_data" v-bind:key="n.key">
+        <td> {{n.key+1}} </td>
+        <td> {{n.column1}} </td>
+        <td> {{n.column2}} </td>
+        <td> {{n.column3}} </td>
+        <td> {{n.column4}} </td>
+        <td> {{n.column5}} </td>
+        <td> {{n.column6}} </td>
+        <td> {{n.column7}} </td>
+        <td> {{n.column8}} </td>
+        </tr>
+        </tbody>
+          </table>
+        </div>
+      </div>
     </div>
     <!-- <TableResult v-bind:outputWords="outputWords" /> -->
   </div>
@@ -198,8 +223,11 @@ export default {
       var leftdata = this.outputWordsLeft.arr_data;
       var rightdata = this.outputWordsRight.arr_data;
 
-      var leftdatafilter = [];
-      var rightdatafilter = [];
+      // var leftdatafilter = [];
+      // var rightdatafilter = [];
+      var leftdatafilter = this.outputWordsLeft.arr_data;
+      var rightdatafilter = this.outputWordsRight.arr_data;
+
       var c_count = 0;
 
       // var leftdata2 = this.outputWordsLeft.arr_data;
@@ -214,25 +242,54 @@ export default {
         countrow = this.outputWordsLeft.countrow;
       }
 
-      for (let i = 0; i < countrow; i++) {
-        let data1 = leftdata[i].column1.trim().toString();
-        let data2 = rightdata[i].column1.trim().toString();
+      // for (let i = 0; i < countrow; i++) {
+      //   let data1 = leftdata[i].column1.trim().toString();
+      //   let data2 = rightdata[i].column1.trim().toString();
     
+      //   // console.log(i,rightdata[0].key,data1 , data2 , 'true or false',(data1 == data2))
+
+      //   if (data1 == data2) {
+      //     // rightdatafilter = leftdata.filter(el => el.key !== i);
+      //     // leftdatafilter = rightdata.filter(el => el.key !== i);
+      //     rightdatafilter.push({ key: c_count, column1: data1 });
+      //     leftdatafilter.push({ key: c_count, column1: data1 });
+      //     // rightdatafilter[c_count] = {};
+      //     // leftdatafilter[c_count] = rightdata.filter(el => el.key !== i);
+      //     c_count++;
+      //   }
+
+      //   this.resultMatchingleft = leftdata;
+      //   this.resultMatchingright = rightdata;
+      // }
+           for (let i = 0; i < countrow; i++) {
+
+        let data1 = leftdata[c_count].column1.trim().toString();
+        // let data2 = rightdata[i].column1.trim().toString();
+
         // console.log(i,rightdata[0].key,data1 , data2 , 'true or false',(data1 == data2))
+        for(let c = 0;c < rightdata.length;c++)
+        {
+          console.log(data1,rightdata[c].column1.trim().toString())
+          if (data1 == rightdata[c].column1.trim().toString()) {
+                  leftdatafilter = leftdatafilter.filter(el => el.key !== i);
+                  rightdatafilter = rightdatafilter.filter(el => el.key !== c);
+                  console.log(rightdatafilter)
+                  console.log(leftdatafilter)
+                  // rightdatafilter.push({ key: c_count, column1: data1 });
+                  // leftdatafilter.push({ key: c_count, column1: data1 });
+                  // rightdatafilter[c_count] = {};
+                  // leftdatafilter[c_count] = rightdata.filter(el => el.key !== i);
+                  c_count++;
+                  continue;
+          }
 
-        if (data1 == data2) {
-          // rightdatafilter = leftdata.filter(el => el.key !== i);
-          // leftdatafilter = rightdata.filter(el => el.key !== i);
-          rightdatafilter.push({ key: c_count, column1: data1 });
-          leftdatafilter.push({ key: c_count, column1: data1 });
-          // rightdatafilter[c_count] = {};
-          // leftdatafilter[c_count] = rightdata.filter(el => el.key !== i);
-          c_count++;
         }
+      
 
-        this.resultMatchingleft = leftdata;
-        this.resultMatchingright = rightdata;
+        this.resultMatchingleft = leftdatafilter;
+        this.resultMatchingright = rightdatafilter;
       }
+
 
       this.isMatching = true;
     }
