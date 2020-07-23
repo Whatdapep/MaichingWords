@@ -1,6 +1,10 @@
 <template>
   <div class="container">
     <div class="row">
+    <div>
+    <button @click="Data1FeedData">data 1</button>
+     <button @click="Data2FeedData">data 2</button>
+    </div>
       <div class="col-6">
         <label for="word">insert Words Matching Left&nbsp;</label>
         <input
@@ -149,7 +153,11 @@ export default {
       //  ตัวแปลเทียบข้อมูล
       isMatching: false,
       resultMatchingleft: [],
-      resultMatchingright: []
+      resultMatchingright: [],
+
+      // loop array 
+      leftdataraw:'00017 00042 00044 00054 00055 00087 00098 00100 00101 00114 00171 00173 00186 00189 00190 00191 00194 00220 00226 00228 00230 00242 00260 00285 00290 00313 00334 00337 00338 00356 00382 00430 00438 00476 00486 00491 00494 00500 00504 00523 00534 00540 00542 00549 00552 00567 00570 00571 00577 00583 00600 00626 00638 00646 00650 00661 00675 00676 00693 00696 00706 00713 00722 00730 00744 00786 00793 00797 00806 00808 00810 00812 00820 00824 00837 00841 00851 00854 00897 00915 00934 00936 00950 00956 00961 00968 01031 01037 01052 01055 01060 01064 01083 01099 01103 01107 01112 01146 01177 01193',
+rightdataraw:'01193 01177 01146 01112 01107 01103 01099 01083 01064 01060 01055 01052 01037 01031 00968 00961 00956 00950 00936 00934 00915 00897 00854 00851 00841 00837 00824 00820 00812 00810 00808 00806 00797 00793 00786 00744 00730 00722 00713 00706 00696 00693 00676 00675 00661 00650 00646 00638 00626 00600 00583 00577 00571 00570 00567 00552 00549 00542 00540 00534 00523 00504 00500 00494 00491 00486 00476 00438 00430 00382 00356 00338 00337 00334 00313 00290 00285 00260 00242 00230 00228 00226 00220 00194 00191 00190 00189 00186 00173 00171 00114 00101 00100 00098 00087 00055 00054 00044 00042 00017',
     };
   },
   methods: {
@@ -218,6 +226,14 @@ export default {
       this.outputWordsRight.data = propArr;
       this.isDataRight = true;
     },
+    Data1FeedData:function()
+    {
+      this.words = this.leftdataraw
+    },
+    Data2FeedData:function()
+    {
+      this.word2 = this.rightdataraw
+    },
 
     MatchingTools: function() {
       var leftdata = this.outputWordsLeft.arr_data;
@@ -233,47 +249,22 @@ export default {
       // var leftdata2 = this.outputWordsLeft.arr_data;
       // var rightdata2 = this.outputWordsRight.arr_data;
       var countrow = 0;
-
-      //         let someArray = getArray();
-      // let noJohn = someArray.filter( el => el.name !== "John" );
       if (this.outputWordsLeft.countrow >= this.outputWordsRight.countrow) {
         countrow = this.outputWordsRight.countrow;
       } else {
         countrow = this.outputWordsLeft.countrow;
       }
-      // for (let i = 0; i < countrow; i++) {
-      //   let data1 = leftdata[i].column1.trim().toString();
-      //   let data2 = rightdata[i].column1.trim().toString();
-      //   // console.log(i,rightdata[0].key,data1 , data2 , 'true or false',(data1 == data2))
-      //   if (data1 == data2) {
-      //     // rightdatafilter = leftdata.filter(el => el.key !== i);
-      //     // leftdatafilter = rightdata.filter(el => el.key !== i);
-      //     rightdatafilter.push({ key: c_count, column1: data1 });
-      //     leftdatafilter.push({ key: c_count, column1: data1 });
-      //     // rightdatafilter[c_count] = {};
-      //     // leftdatafilter[c_count] = rightdata.filter(el => el.key !== i);
-      //     c_count++;
-      //   }
-      //   this.resultMatchingleft = leftdata;
-      //   this.resultMatchingright = rightdata;
-      // }
+
            for (let i = 0; i < countrow; i++) {
         let data1 = leftdata[c_count].column1.trim().toString();
-        // let data2 = rightdata[i].column1.trim().toString();
-        // console.log(i,rightdata[0].key,data1 , data2 , 'true or false',(data1 == data2))
         for(let c = 0;c < rightdatafilter.length;c++)
         {
+           console.log(data1, rightdatafilter[c].column1.trim().toString(),c_count)
+             
           if (data1 == rightdatafilter[c].column1.trim().toString()) {
-              // console.log(data1,rightdatafilter[c].column1.trim().toString())
-              console.log(leftdatafilter.length,rightdatafilter.length)
                   leftdatafilter = leftdatafilter.filter(el => el.key !== i);
                   rightdatafilter = rightdatafilter.filter(el => el.key !== i);
-                  // console.log(rightdatafilter)
-                  // console.log(leftdatafilter)
-                  // rightdatafilter.push({ key: c_count, column1: data1 });
-                  // leftdatafilter.push({ key: c_count, column1: data1 });
-                  // rightdatafilter[c_count] = {};
-                  // leftdatafilter[c_count] = rightdata.filter(el => el.key !== i);
+                
                   c_count++;
                   continue;
           }
