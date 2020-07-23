@@ -241,13 +241,10 @@ export default {
       } else {
         countrow = this.outputWordsLeft.countrow;
       }
-
       // for (let i = 0; i < countrow; i++) {
       //   let data1 = leftdata[i].column1.trim().toString();
       //   let data2 = rightdata[i].column1.trim().toString();
-    
       //   // console.log(i,rightdata[0].key,data1 , data2 , 'true or false',(data1 == data2))
-
       //   if (data1 == data2) {
       //     // rightdatafilter = leftdata.filter(el => el.key !== i);
       //     // leftdatafilter = rightdata.filter(el => el.key !== i);
@@ -257,19 +254,15 @@ export default {
       //     // leftdatafilter[c_count] = rightdata.filter(el => el.key !== i);
       //     c_count++;
       //   }
-
       //   this.resultMatchingleft = leftdata;
       //   this.resultMatchingright = rightdata;
       // }
            for (let i = 0; i < countrow; i++) {
-
         let data1 = leftdata[c_count].column1.trim().toString();
         // let data2 = rightdata[i].column1.trim().toString();
-
         // console.log(i,rightdata[0].key,data1 , data2 , 'true or false',(data1 == data2))
-        for(let c = 0;c < leftdatafilter.length;c++)
+        for(let c = 0;c < rightdatafilter.length;c++)
         {
-         
           if (data1 == rightdatafilter[c].column1.trim().toString()) {
               // console.log(data1,rightdatafilter[c].column1.trim().toString())
               console.log(leftdatafilter.length,rightdatafilter.length)
@@ -284,15 +277,10 @@ export default {
                   c_count++;
                   continue;
           }
-
         }
-      
-
         this.resultMatchingleft = leftdatafilter;
         this.resultMatchingright = rightdatafilter;
       }
-
-
       this.isMatching = true;
     }
   },
