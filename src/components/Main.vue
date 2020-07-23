@@ -39,10 +39,10 @@
           <span>จำนวนแถวทั้งหมด {{ outputWordsLeft.countrow}}</span>
           <!-- <table>
         <thead>
-          <th><td>row</td></th>
-           <th v-for="n in columnName" v-bind:key="n.key">
+          <tr><td>row</td></tr>
+           <tr v-for="n in columnName" v-bind:key="n.key">
           <td> {{n.columnName}} </td>
-          </th>
+          </tr>
         </thead>
         <tbody>
         <tr v-for="n in outputWordsLeft.arr_data" v-bind:key="n.key">
@@ -67,10 +67,10 @@
           <span>จำนวนแถวทั้งหมด {{ outputWordsRight.countrow}}</span>
           <!--  <table>
         <thead>
-          <th><td>row</td></th>
-           <th v-for="n in columnName" v-bind:key="n.key">
+          <tr><td>row</td></tr>
+           <tr v-for="n in columnName" v-bind:key="n.key">
           <td> {{n.columnName}} </td>
-          </th>
+          </tr>
         </thead>
         <tbody>
         <tr v-for="n in outputWordsRight.arr_data" v-bind:key="n.key">
@@ -92,10 +92,10 @@
         <div v-if="isMatching">
            <table>
         <thead>
-          <th><td>row</td></th>
-           <th v-for="n in columnName" v-bind:key="n.key">
+          <tr><td>row</td></tr>
+           <tr v-for="n in columnName" v-bind:key="n.key">
           <td> {{n.columnName}} </td>
-          </th>
+          </tr>
         </thead>
         <tbody>
         <tr v-for="n in resultMatchingright.arr_data" v-bind:key="n.key">
@@ -221,7 +221,7 @@ export default {
 
     MatchingTools: function() {
       var leftdata = this.outputWordsLeft.arr_data;
-      var rightdata = this.outputWordsRight.arr_data;
+      // var rightdata = this.outputWordsRight.arr_data;
 
       // var leftdatafilter = [];
       // var rightdatafilter = [];
@@ -267,14 +267,16 @@ export default {
         // let data2 = rightdata[i].column1.trim().toString();
 
         // console.log(i,rightdata[0].key,data1 , data2 , 'true or false',(data1 == data2))
-        for(let c = 0;c < rightdata.length;c++)
+        for(let c = 0;c < leftdatafilter.length;c++)
         {
-          console.log(data1,rightdata[c].column1.trim().toString())
-          if (data1 == rightdata[c].column1.trim().toString()) {
+         
+          if (data1 == rightdatafilter[c].column1.trim().toString()) {
+              // console.log(data1,rightdatafilter[c].column1.trim().toString())
+              console.log(leftdatafilter.length,rightdatafilter.length)
                   leftdatafilter = leftdatafilter.filter(el => el.key !== i);
-                  rightdatafilter = rightdatafilter.filter(el => el.key !== c);
-                  console.log(rightdatafilter)
-                  console.log(leftdatafilter)
+                  rightdatafilter = rightdatafilter.filter(el => el.key !== i);
+                  // console.log(rightdatafilter)
+                  // console.log(leftdatafilter)
                   // rightdatafilter.push({ key: c_count, column1: data1 });
                   // leftdatafilter.push({ key: c_count, column1: data1 });
                   // rightdatafilter[c_count] = {};
