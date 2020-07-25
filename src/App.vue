@@ -1,6 +1,8 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
+  <div id="app" class="container mx-auto text-center">
+  <div class="box-content flex flex-1">
+    <img class="m-auto" alt="Vue logo" src="./assets/logo.png">
+    </div>
    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <Main />
   </div>
