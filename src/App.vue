@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container mx-auto text-center">
+  <div id="app" class="container-fluid bg-gray-100 text-center mx-auto" >
   <div class="box-content flex flex-1">
     <img class="m-auto" alt="Vue logo" src="./assets/logo.png">
     </div>

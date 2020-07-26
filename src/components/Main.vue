@@ -134,73 +134,29 @@
           </div>
         </div>
       </div>
-      <div class="flex">
-        <!--    <label for="percent">จับคู่สำเร็จ</label>
-          <input id="percent" v-model="percentSuccess" />
-          {{ percentSuccess }} -->
-        <div v-if="isMatching">
-          <div class="flex-1">
-            <table>
-              <thead>
-                <tr>
-                  <td>row left</td>
-                </tr>
-                <tr v-for="n in columnName" v-bind:key="n.key">
-                  <td>{{ n.columnName }}</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="n in resultMatchingleft" v-bind:key="n.key">
-                  <td>{{ n.key + 1 }}</td>
-                  <td>{{ n.column1 }}</td>
-                  <td>{{ n.column2 }}</td>
-                  <td>{{ n.column3 }}</td>
-                  <td>{{ n.column4 }}</td>
-                  <td>{{ n.column5 }}</td>
-                  <td>{{ n.column6 }}</td>
-                  <td>{{ n.column7 }}</td>
-                  <td>{{ n.column8 }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="flex-1">
-            <table>
-              <thead>
-                <tr>
-                  <td>row right</td>
-                </tr>
-                <tr v-for="n in columnName" v-bind:key="n.key">
-                  <td>{{ n.columnName }}</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="n in resultMatchingright" v-bind:key="n.key">
-                  <td>{{ n.key + 1 }}</td>
-                  <td>{{ n.column1 }}</td>
-                  <td>{{ n.column2 }}</td>
-                  <td>{{ n.column3 }}</td>
-                  <td>{{ n.column4 }}</td>
-                  <td>{{ n.column5 }}</td>
-                  <td>{{ n.column6 }}</td>
-                  <td>{{ n.column7 }}</td>
-                  <td>{{ n.column8 }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+
+      <div class="container">
+        <div class="flex mt-3" v-if="isMatching">
+          <br />
+
+          <ResultMatching
+            v-bind:dataleft="OutputresultMatchingleft"
+            v-bind:columnName="columnName"
+            v-bind:dataright="OutputresultMatchingright"
+          />
         </div>
       </div>
-      <!-- <TableResult v-bind:outputWords="outputWords" /> -->
     </div>
   </div>
 </template>
 <script>
-// import TableResult from './TableResult';
+// import TableResult from './TableResult'
+import ResultMatching from './ResultMatching'
 export default {
   name: 'Main',
   components: {
     // TableResult
+    ResultMatching
   },
   data: function () {
     return {
@@ -228,6 +184,8 @@ export default {
       isMatching: false,
       resultMatchingleft: [],
       resultMatchingright: [],
+      OutputresultMatchingleft: [],
+      OutputresultMatchingright: [],
       percentSuccess: `${0} %`,
 
       // loop array
@@ -254,11 +212,10 @@ export default {
         this.columnName.push({ key: i, columnName: `column${i + 1}` })
       }
       // For loop เก็บ data มาใส่ Array object แบบมี key ประกาศด้วย
-      for (let i = 0; i < propArr.length; i++)
-       {
+      for (let i = 0; i < propArr.length; i++) {
         //  เช็คว่ามี multicolumn ใหม
         if (ColumnCount > 1) {
-          // แยก data ของแต่ละ column 
+          // แยก data ของแต่ละ column
           let multicloumn = propArr[i].split('	')
           // loop เพื่อ การ save แบบ multicolumn ต้องมี เทคนิคนิดนึง
           for (let c = -1; c < ColumnCount; c++) {
@@ -270,14 +227,14 @@ export default {
               arr_result[i] = { ...arr_result[i], ...scopeArr }
             }
           }
-          // 
-        } 
+          //
+        }
         // เป็น Column แบบเดี่ยว
         else {
           arr_result.push({ key: i, column1: propArr[i] })
         }
       }
-      // 
+      //
       // console.log(arr_result);
       this.outputWordsLeft.arr_data = arr_result
       this.outputWordsLeft.countrow = propArr.length
@@ -328,49 +285,142 @@ export default {
       let leftdata = this.outputWordsLeft.arr_data
       let leftdatafilter = this.outputWordsLeft.arr_data
       let rightdatafilter = this.outputWordsRight.arr_data
-      let c_count = 0
+      // let c_count = 0
       let countrow = 0
+      let o_count = 0
 
       if (this.outputWordsLeft.countrow >= this.outputWordsRight.countrow) {
         countrow = this.outputWordsRight.countrow
       } else {
         countrow = this.outputWordsLeft.countrow
       }
-      let percent = countrow / 100
+      let percent = this.PercentCal(countrow)
       let percentSuccess = 0
+
       for (let i = 0; i < countrow; i++) {
         let data1 = leftdata[i].column1.trim().toString()
-        for (let c = 0; c < rightdatafilter.length; c++) {
-          //  console.log('c',c,data1, rightdatafilter[c].column1.trim().toString(),'c_count',c_count,'round',i)
-          if (data1 == rightdatafilter[c].column1.trim().toString()) {
-            leftdatafilter = leftdatafilter.filter(el => el.key !== i)
-            rightdatafilter = rightdatafilter.filter(
-              el => el.key !== rightdatafilter[c].key
-            )
-            //     if (rightdatafilter.length <= 500) {
 
-            //   // console.log(rightdatafilter);
-            // }
-
-            c_count++
-            if (parseFloat(c_count) == parseFloat(percent)) {
-              console.log(this.percentSuccess)
-              percentSuccess++
-              c_count = 0
-              this.percentSuccess = percentSuccess + ' %'
-            }
-
-            continue
-          }
+        if (parseFloat(o_count) == parseFloat(percent)) {
+          console.log(this.percentSuccess)
+          percentSuccess++
+          o_count = 0
+          this.percentSuccess = percentSuccess + ' %'
         }
-
+        o_count++
+        // console.log(percent);
+        if (rightdatafilter.find(o => o.column1 === data1)) {
+          let finded = rightdatafilter.find(o => o.column1 === leftdata[i].column1.trim().toString());
+          leftdatafilter = leftdatafilter.filter(el => el.key !== i)
+          rightdatafilter = rightdatafilter.filter(
+            el => el.key !== finded.key
+          )
+        } 
         this.resultMatchingleft = leftdatafilter
         this.resultMatchingright = rightdatafilter
       }
+
+      //   for (let i = 0; i < countrow; i++) {
+      //   let data1 = leftdata[i].column1.trim().toString()
+
+      //   if (parseFloat(o_count) == parseFloat(percent)) {
+      //     console.log(this.percentSuccess)
+      //     percentSuccess++
+      //     o_count = 0
+      //     this.percentSuccess = percentSuccess + ' %'
+      //   }
+      //   o_count++
+      //   // console.log(percent);
+
+      //   for (let c = 0; c < rightdatafilter.length; c++) {
+      //     if (data1 == rightdatafilter[c].column1.trim().toString()) {
+      //       if (this.columnName.length > 1) {
+
+      //           // for(let col_count =0;col_count < this.columnName.length-1;col_count++)
+      //           // {
+
+      //           // }
+
+      //         // console.log('pom');
+      //       } else {
+      //         leftdatafilter = leftdatafilter.filter(el => el.key !== i)
+      //         rightdatafilter = rightdatafilter.filter(
+      //           el => el.key !== rightdatafilter[c].key
+      //         )
+      //       }
+      //       continue
+      //     }
+      //   }
+
+      //   this.resultMatchingleft = leftdatafilter
+      //   this.resultMatchingright = rightdatafilter
+      // }
+
+      this.OutputresultMatchingleft = this.setOutputResultMatchingLeft
+      this.OutputresultMatchingright = this.setOutputResultMatchingRight
+
       this.isMatching = true
+    },
+    PercentCal: function (countrow) {
+      let count = countrow / 100
+      if (countrow < 100) {
+        return 1
+      } else {
+        return count
+      }
     }
   },
-  computed: {}
+  computed: {
+    setOutputResultMatchingLeft: function () {
+      let datainmatching = this.resultMatchingleft
+      let rawdata = this.outputWordsLeft.arr_data
+      let callBackData = []
+      console.log(datainmatching)
+      for (let i = 0; i < rawdata.length; i++) {
+        if (
+          datainmatching.find(result => result.column1 === rawdata[i].column1)
+        ) {
+          callBackData.push({
+            key: i,
+            column1: rawdata[i].column1,
+            color: `text-red-600 bg-red-300`,
+            bg: `bg-red-300`
+          })
+        } else {
+          callBackData.push({
+            key: i,
+            column1: rawdata[i].column1,
+            color: `text-green-600 bg-green-300`,
+            bg: `bg-green-300`
+          })
+        }
+      }
+      return callBackData
+    },
+    setOutputResultMatchingRight: function () {
+      let datainmatching = this.resultMatchingright
+      let rawdata = this.outputWordsRight.arr_data
+      let callBackData = []
+
+      for (let i = 0; i < rawdata.length; i++) {
+        if (datainmatching.find(o => o.column1 === rawdata[i].column1)) {
+          callBackData.push({
+            key: i,
+            column1: rawdata[i].column1,
+            color: `text-red-600 bg-red-300`,
+            bg: `bg-red-300`
+          })
+        } else {
+          callBackData.push({
+            key: i,
+            column1: rawdata[i].column1,
+            color: `text-green-600 bg-green-300`,
+            bg: `bg-green-300`
+          })
+        }
+      }
+      return callBackData
+    }
+  }
 }
 </script>
 <style scoped></style>
