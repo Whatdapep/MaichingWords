@@ -5,7 +5,7 @@
     <div class="flex mt-3">
       <div class="flex-1">
         <div>
-          <TableResult
+          <TableResultUnMatching
             v-bind:inmatchingwords="dataleftunmatching"
             v-bind:propscolumnName="columnName"
             v-bind:propsdata="dataleftunmatching"
@@ -15,7 +15,7 @@
 
       <div class="flex-1">
         <div>
-          <TableResult
+          <TableResultUnMatching
             v-bind:inmatchingwords="datarightunmatching"
             v-bind:propscolumnName="columnName"
             v-bind:propsdata="datarightunmatching"
@@ -50,10 +50,11 @@
 
 <script>
 import TableResult from './Utils/TableResult'
+import TableResultUnMatching from './Utils/TableResultUnMatching'
 import ResultSuccessBar from './Utils/ResultSuccessBar'
 export default {
   name: 'ResultMatching',
-  components: { TableResult, ResultSuccessBar },
+  components: { TableResult, ResultSuccessBar,TableResultUnMatching },
   data: function () {
     return {
       //   propsdata: null,

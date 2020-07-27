@@ -98,8 +98,8 @@
             v-bind:dataleft="OutputresultMatchingleft"
             v-bind:columnName="columnName"
             v-bind:dataright="OutputresultMatchingright"
-            v-bind:datarightunmatching="resultMatchingleft"
-            v-bind:dataleftunmatching="resultMatchingright"
+            v-bind:dataleftunmatching="resultMatchingleft"
+            v-bind:datarightunmatching="resultMatchingright"
           />
         </div>
       </div>
@@ -191,8 +191,6 @@ export default {
           arr_result.push({ key: i, column1: propArr[i] })
         }
       }
-      //
-      // console.log(arr_result);
       this.outputWordsLeft.arr_data = arr_result
       this.outputWordsLeft.countrow = propArr.length
       this.outputWordsLeft.data = propArr
@@ -225,7 +223,6 @@ export default {
           arr_result.push({ key: i, column1: propArr[i] })
         }
       }
-      // console.log(arr_result);
       this.outputWordsRight.arr_data = arr_result
       this.outputWordsRight.countrow = propArr.length
       this.outputWordsRight.data = propArr
@@ -264,7 +261,6 @@ export default {
           this.percentSuccess = percentSuccess + ' %'
         }
         o_count++
-        // console.log(percent);
         switch (this.columnName.length) {
           case 1:
             if (
@@ -460,28 +456,9 @@ export default {
       let datainmatching = this.resultMatchingleft
       let rawdata = this.outputWordsLeft.arr_data
       let callBackData = []
-      console.log(datainmatching)
       for (let i = 0; i < rawdata.length; i++) {
-        // if (
-        //   datainmatching.find(result => result.column1 === rawdata[i].column1)
-        // ) {
-        //   callBackData.push({
-        //     key: i,
-        //     column1: rawdata[i].column1,
-        //     color: `text-red-600 bg-red-300`,
-        //     bg: `bg-red-300`
-        //   })
-        // } else {
-        //   callBackData.push({
-        //     key: i,
-        //     column1: rawdata[i].column1,
-        //     color: `text-green-600 bg-green-300`,
-        //     bg: `bg-green-300`
-        //   })
-        // }
        switch (this.columnName.length) {
           case 1:
-            console.log('in here case 1')
             if (
               datainmatching.find(
                 o => o.column1.trim().toString() === rawdata[i].column1
@@ -511,7 +488,6 @@ export default {
             break
 
           case 2:
-            // console.log('in here case 2');
             if (
               datainmatching.find(
                 o =>
@@ -725,11 +701,9 @@ export default {
       let datainmatching = this.resultMatchingright
       let rawdata = this.outputWordsRight.arr_data
       let callBackData = []
-      //  console.log('in here case right');
       for (let i = 0; i < rawdata.length; i++) {
         switch (this.columnName.length) {
           case 1:
-            console.log('in here case 1')
             if (
               datainmatching.find(
                 o => o.column1.trim().toString() === rawdata[i].column1
@@ -757,9 +731,7 @@ export default {
               })
             }
             break
-
           case 2:
-            // console.log('in here case 2');
             if (
               datainmatching.find(
                 o =>
