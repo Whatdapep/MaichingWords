@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
-    <div class="flex">
-      <div>
+  <div class="container-fluid">
+    <div class="flex flex-row sm:flex-row lg:flex-row xs:flex-col">
+      <!-- <div>
         <button
           @click="Data1FeedData"
           class="rounded bg-orange-200 hover:bg-orange-200"
@@ -14,7 +14,7 @@
         >
           data 2
         </button>
-      </div>
+      </div> -->
       <div class="flex-1 text-center m-1">
         <label
           for="word"
@@ -61,10 +61,7 @@
         </button>
       </div>
     </div>
-    <!-- <div id="wordsOutput">
-      {{ outputWords }}
-    </div>-->
-    <div class="container">
+    <div class="">
       <div class="flex-row">
         <div v-if="isDataRight">
           <div v-if="isDataLeft">
@@ -82,27 +79,6 @@
           <div v-if="isDataLeft">
             <p>มีข้อมูล</p>
             <span>จำนวนแถวทั้งหมด {{ outputWordsLeft.countrow }}</span>
-            <!-- <table>
-        <thead>
-          <tr><td>row</td></tr>
-           <tr v-for="n in columnName" v-bind:key="n.key">
-          <td> {{n.columnName}} </td>
-          </tr>
-        </thead>
-        <tbody>
-        <tr v-for="n in outputWordsLeft.arr_data" v-bind:key="n.key">
-        <td> {{n.key+1}} </td>
-        <td> {{n.column1}} </td>
-        <td> {{n.column2}} </td>
-        <td> {{n.column3}} </td>
-        <td> {{n.column4}} </td>
-        <td> {{n.column5}} </td>
-        <td> {{n.column6}} </td>
-        <td> {{n.column7}} </td>
-        <td> {{n.column8}} </td>
-        </tr>
-        </tbody>
-          </table>-->
           </div>
         </div>
 
@@ -110,32 +86,11 @@
           <div v-if="isDataRight">
             <p>มีข้อมูล</p>
             <span>จำนวนแถวทั้งหมด {{ outputWordsRight.countrow }}</span>
-            <!--  <table>
-        <thead>
-          <tr><td>row</td></tr>
-           <tr v-for="n in columnName" v-bind:key="n.key">
-          <td> {{n.columnName}} </td>
-          </tr>
-        </thead>
-        <tbody>
-        <tr v-for="n in outputWordsRight.arr_data" v-bind:key="n.key">
-        <td> {{n.key+1}} </td>
-        <td> {{n.column1}} </td>
-        <td> {{n.column2}} </td>
-        <td> {{n.column3}} </td>
-        <td> {{n.column4}} </td>
-        <td> {{n.column5}} </td>
-        <td> {{n.column6}} </td>
-        <td> {{n.column7}} </td>
-        <td> {{n.column8}} </td>
-        </tr>
-        </tbody>
-          </table>-->
           </div>
         </div>
       </div>
 
-      <div class="container">
+      <div class="">
         <div class="flex mt-3" v-if="isMatching">
           <br />
 
@@ -143,6 +98,8 @@
             v-bind:dataleft="OutputresultMatchingleft"
             v-bind:columnName="columnName"
             v-bind:dataright="OutputresultMatchingright"
+            v-bind:datarightunmatching="resultMatchingleft"
+            v-bind:dataleftunmatching="resultMatchingright"
           />
         </div>
       </div>
@@ -308,53 +265,182 @@ export default {
         }
         o_count++
         // console.log(percent);
-        if (rightdatafilter.find(o => o.column1 === data1)) {
-          let finded = rightdatafilter.find(o => o.column1 === leftdata[i].column1.trim().toString());
-          leftdatafilter = leftdatafilter.filter(el => el.key !== i)
-          rightdatafilter = rightdatafilter.filter(
-            el => el.key !== finded.key
-          )
-        } 
+        switch (this.columnName.length) {
+          case 1:
+            if (
+              rightdatafilter.find(o => o.column1.trim().toString() === data1)
+            ) {
+              let finded = rightdatafilter.find(
+                o =>
+                  o.column1.trim().toString() ===
+                  leftdata[i].column1.trim().toString()
+              )
+              leftdatafilter = leftdatafilter.filter(el => el.key !== i)
+              rightdatafilter = rightdatafilter.filter(
+                el => el.key !== finded.key
+              )
+            }
+            break
+          case 2:
+            if (
+              rightdatafilter.find(
+                o =>
+                  o.column1.trim().toString() === data1 &&
+                  o.column2.trim().toString() ===
+                    leftdata[i].column2.trim().toString()
+              )
+            ) {
+              let finded = rightdatafilter.find(
+                o =>
+                  o.column1.trim().toString() ===
+                    leftdata[i].column1.trim().toString() &&
+                  o.column2.trim().toString() ===
+                    leftdata[i].column2.trim().toString()
+              )
+              leftdatafilter = leftdatafilter.filter(el => el.key !== i)
+              rightdatafilter = rightdatafilter.filter(
+                el => el.key !== finded.key
+              )
+            }
+
+            break
+          case 3:
+            if (
+              rightdatafilter.find(
+                o =>
+                  o.column1.trim().toString() === data1 &&
+                  o.column2.trim().toString() ===
+                    leftdata[i].column2.trim().toString() &&
+                  o.column3.trim().toString() ===
+                    leftdata[i].column3.trim().toString()
+              )
+            ) {
+              let finded = rightdatafilter.find(
+                o =>
+                  o.column1.trim().toString() ===
+                    leftdata[i].column1.trim().toString() &&
+                  o.column2.trim().toString() ===
+                    leftdata[i].column2.trim().toString() &&
+                  o.column3.trim().toString() ===
+                    leftdata[i].column3.trim().toString()
+              )
+              leftdatafilter = leftdatafilter.filter(el => el.key !== i)
+              rightdatafilter = rightdatafilter.filter(
+                el => el.key !== finded.key
+              )
+            }
+
+            break
+          case 4:
+            if (
+              rightdatafilter.find(
+                o =>
+                  o.column1.trim().toString() === data1 &&
+                  o.column2.trim().toString() ===
+                    leftdata[i].column2.trim().toString() &&
+                  o.column3.trim().toString() ===
+                    leftdata[i].column3.trim().toString() &&
+                  o.column4.trim().toString() ===
+                    leftdata[i].column4.trim().toString()
+              )
+            ) {
+              let finded = rightdatafilter.find(
+                o =>
+                  o.column1.trim().toString() ===
+                    leftdata[i].column1.trim().toString() &&
+                  o.column2.trim().toString() ===
+                    leftdata[i].column2.trim().toString() &&
+                  o.column3.trim().toString() ===
+                    leftdata[i].column3.trim().toString() &&
+                  o.column4.trim().toString() ===
+                    leftdata[i].column4.trim().toString()
+              )
+              leftdatafilter = leftdatafilter.filter(el => el.key !== i)
+              rightdatafilter = rightdatafilter.filter(
+                el => el.key !== finded.key
+              )
+            }
+
+            break
+          case 5:
+            if (
+              rightdatafilter.find(
+                o =>
+                  o.column1.trim().toString() === data1 &&
+                  o.column2.trim().toString() ===
+                    leftdata[i].column2.trim().toString() &&
+                  o.column3.trim().toString() ===
+                    leftdata[i].column3.trim().toString() &&
+                  o.column4.trim().toString() ===
+                    leftdata[i].column4.trim().toString() &&
+                  o.column5.trim().toString() ===
+                    leftdata[i].column5.trim().toString()
+              )
+            ) {
+              let finded = rightdatafilter.find(
+                o =>
+                  o.column1.trim().toString() ===
+                    leftdata[i].column1.trim().toString() &&
+                  o.column2.trim().toString() ===
+                    leftdata[i].column2.trim().toString() &&
+                  o.column3.trim().toString() ===
+                    leftdata[i].column3.trim().toString() &&
+                  o.column4.trim().toString() ===
+                    leftdata[i].column4.trim().toString() &&
+                  o.column5.trim().toString() ===
+                    leftdata[i].column5.trim().toString()
+              )
+              leftdatafilter = leftdatafilter.filter(el => el.key !== i)
+              rightdatafilter = rightdatafilter.filter(
+                el => el.key !== finded.key
+              )
+            }
+
+            break
+          case 6:
+            if (
+              rightdatafilter.find(
+                o =>
+                  o.column1.trim().toString() === data1 &&
+                  o.column2.trim().toString() ===
+                    leftdata[i].column2.trim().toString() &&
+                  o.column3.trim().toString() ===
+                    leftdata[i].column3.trim().toString() &&
+                  o.column4.trim().toString() ===
+                    leftdata[i].column4.trim().toString() &&
+                  o.column5.trim().toString() ===
+                    leftdata[i].column5.trim().toString() &&
+                  o.column6.trim().toString() ===
+                    leftdata[i].column6.trim().toString()
+              )
+            ) {
+              let finded = rightdatafilter.find(
+                o =>
+                  o.column1.trim().toString() ===
+                    leftdata[i].column1.trim().toString() &&
+                  o.column2.trim().toString() ===
+                    leftdata[i].column2.trim().toString() &&
+                  o.column3.trim().toString() ===
+                    leftdata[i].column3.trim().toString() &&
+                  o.column4.trim().toString() ===
+                    leftdata[i].column4.trim().toString() &&
+                  o.column5.trim().toString() ===
+                    leftdata[i].column5.trim().toString() &&
+                  o.column6.trim().toString() ===
+                    leftdata[i].column6.trim().toString()
+              )
+              leftdatafilter = leftdatafilter.filter(el => el.key !== i)
+              rightdatafilter = rightdatafilter.filter(
+                el => el.key !== finded.key
+              )
+            }
+
+            break
+        }
+
         this.resultMatchingleft = leftdatafilter
         this.resultMatchingright = rightdatafilter
       }
-
-      //   for (let i = 0; i < countrow; i++) {
-      //   let data1 = leftdata[i].column1.trim().toString()
-
-      //   if (parseFloat(o_count) == parseFloat(percent)) {
-      //     console.log(this.percentSuccess)
-      //     percentSuccess++
-      //     o_count = 0
-      //     this.percentSuccess = percentSuccess + ' %'
-      //   }
-      //   o_count++
-      //   // console.log(percent);
-
-      //   for (let c = 0; c < rightdatafilter.length; c++) {
-      //     if (data1 == rightdatafilter[c].column1.trim().toString()) {
-      //       if (this.columnName.length > 1) {
-
-      //           // for(let col_count =0;col_count < this.columnName.length-1;col_count++)
-      //           // {
-
-      //           // }
-
-      //         // console.log('pom');
-      //       } else {
-      //         leftdatafilter = leftdatafilter.filter(el => el.key !== i)
-      //         rightdatafilter = rightdatafilter.filter(
-      //           el => el.key !== rightdatafilter[c].key
-      //         )
-      //       }
-      //       continue
-      //     }
-      //   }
-
-      //   this.resultMatchingleft = leftdatafilter
-      //   this.resultMatchingright = rightdatafilter
-      // }
-
       this.OutputresultMatchingleft = this.setOutputResultMatchingLeft
       this.OutputresultMatchingright = this.setOutputResultMatchingRight
 
@@ -376,22 +462,261 @@ export default {
       let callBackData = []
       console.log(datainmatching)
       for (let i = 0; i < rawdata.length; i++) {
-        if (
-          datainmatching.find(result => result.column1 === rawdata[i].column1)
-        ) {
-          callBackData.push({
-            key: i,
-            column1: rawdata[i].column1,
-            color: `text-red-600 bg-red-300`,
-            bg: `bg-red-300`
-          })
-        } else {
-          callBackData.push({
-            key: i,
-            column1: rawdata[i].column1,
-            color: `text-green-600 bg-green-300`,
-            bg: `bg-green-300`
-          })
+        // if (
+        //   datainmatching.find(result => result.column1 === rawdata[i].column1)
+        // ) {
+        //   callBackData.push({
+        //     key: i,
+        //     column1: rawdata[i].column1,
+        //     color: `text-red-600 bg-red-300`,
+        //     bg: `bg-red-300`
+        //   })
+        // } else {
+        //   callBackData.push({
+        //     key: i,
+        //     column1: rawdata[i].column1,
+        //     color: `text-green-600 bg-green-300`,
+        //     bg: `bg-green-300`
+        //   })
+        // }
+       switch (this.columnName.length) {
+          case 1:
+            console.log('in here case 1')
+            if (
+              datainmatching.find(
+                o => o.column1.trim().toString() === rawdata[i].column1
+              )
+            ) {
+              let finded = datainmatching.find(
+                o => o.column1.trim().toString() === rawdata[i].column1
+              )
+              datainmatching = datainmatching.filter(
+                el => el.key !== finded.key
+              )
+              datainmatching.filter
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                color: `text-red-600 bg-red-300`,
+                bg: `bg-red-300`
+              })
+            } else {
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                color: `text-green-600 bg-green-300`,
+                bg: `bg-green-300`
+              })
+            }
+            break
+
+          case 2:
+            // console.log('in here case 2');
+            if (
+              datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2
+              )
+            ) {
+              let finded =   datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2
+              )
+               datainmatching = datainmatching.filter(
+                el => el.key !== finded.key
+              )
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                color: `text-red-600 bg-red-300`,
+                bg: `bg-red-300`
+              })
+            } else {
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                color: `text-green-600 bg-green-300`,
+                bg: `bg-green-300`
+              })
+            }
+            break
+          case 3:
+            if (
+              datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2 &&
+                  o.column3.trim().toString() === rawdata[i].column3
+              )
+            ) {
+              let finded = datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2 &&
+                  o.column3.trim().toString() === rawdata[i].column3
+              );
+              datainmatching = datainmatching.filter(
+                el => el.key !== finded.key
+              )
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                column3: rawdata[i].column3,
+                color: `text-red-600 bg-red-300`,
+                bg: `bg-red-300`
+              })
+            } else {
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                column3: rawdata[i].column3,
+                color: `text-green-600 bg-green-300`,
+                bg: `bg-green-300`
+              })
+            }
+            break
+          case 4:
+            if (
+              datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2 &&
+                  o.column3.trim().toString() === rawdata[i].column3 &&
+                  o.column4.trim().toString() === rawdata[i].column4
+              )
+            ) {
+
+              let finded  = datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2 &&
+                  o.column3.trim().toString() === rawdata[i].column3 &&
+                  o.column4.trim().toString() === rawdata[i].column4
+              )
+              datainmatching = datainmatching.filter(
+                el => el.key !== finded.key
+              )
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                column3: rawdata[i].column3,
+                column4: rawdata[i].column4,
+                color: `text-red-600 bg-red-300`,
+                bg: `bg-red-300`
+              })
+            } else {
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                column3: rawdata[i].column3,
+                column4: rawdata[i].column4,
+                color: `text-green-600 bg-green-300`,
+                bg: `bg-green-300`
+              })
+            }
+            break
+          case 5:
+            if (
+              datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2 &&
+                  o.column3.trim().toString() === rawdata[i].column3 &&
+                  o.column4.trim().toString() === rawdata[i].column4 &&
+                  o.column5.trim().toString() === rawdata[i].column5
+              )
+            ) {
+              let finded = datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2 &&
+                  o.column3.trim().toString() === rawdata[i].column3 &&
+                  o.column4.trim().toString() === rawdata[i].column4 &&
+                  o.column5.trim().toString() === rawdata[i].column5
+              )
+              datainmatching = datainmatching.filter(
+                el => el.key !== finded.key
+              )
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                column3: rawdata[i].column3,
+                column4: rawdata[i].column4,
+                column5: rawdata[i].column5,
+                color: `text-red-600 bg-red-300`,
+                bg: `bg-red-300`
+              })
+            } else {
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                column3: rawdata[i].column3,
+                column4: rawdata[i].column4,
+                column5: rawdata[i].column5,
+                color: `text-green-600 bg-green-300`,
+                bg: `bg-green-300`
+              })
+            }
+            break
+          case 6:
+            if (
+              datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2 &&
+                  o.column3.trim().toString() === rawdata[i].column3 &&
+                  o.column4.trim().toString() === rawdata[i].column4 &&
+                  o.column5.trim().toString() === rawdata[i].column5 &&
+                  o.column6.trim().toString() === rawdata[i].column6
+              )
+            ) {
+              let finded = datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2 &&
+                  o.column3.trim().toString() === rawdata[i].column3 &&
+                  o.column4.trim().toString() === rawdata[i].column4 &&
+                  o.column5.trim().toString() === rawdata[i].column5 &&
+                  o.column6.trim().toString() === rawdata[i].column6
+              )
+              datainmatching = datainmatching.filter(
+                el => el.key !== finded.key
+              )
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                column3: rawdata[i].column3,
+                column4: rawdata[i].column4,
+                column5: rawdata[i].column5,
+                column6: rawdata[i].column6,
+                color: `text-red-600 bg-red-300`,
+                bg: `bg-red-300`
+              })
+            } else {
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                column3: rawdata[i].column3,
+                column4: rawdata[i].column4,
+                column5: rawdata[i].column5,
+                column6: rawdata[i].column6,
+                color: `text-green-600 bg-green-300`,
+                bg: `bg-green-300`
+              })
+            }
+            break
         }
       }
       return callBackData
@@ -400,22 +725,246 @@ export default {
       let datainmatching = this.resultMatchingright
       let rawdata = this.outputWordsRight.arr_data
       let callBackData = []
-
+      //  console.log('in here case right');
       for (let i = 0; i < rawdata.length; i++) {
-        if (datainmatching.find(o => o.column1 === rawdata[i].column1)) {
-          callBackData.push({
-            key: i,
-            column1: rawdata[i].column1,
-            color: `text-red-600 bg-red-300`,
-            bg: `bg-red-300`
-          })
-        } else {
-          callBackData.push({
-            key: i,
-            column1: rawdata[i].column1,
-            color: `text-green-600 bg-green-300`,
-            bg: `bg-green-300`
-          })
+        switch (this.columnName.length) {
+          case 1:
+            console.log('in here case 1')
+            if (
+              datainmatching.find(
+                o => o.column1.trim().toString() === rawdata[i].column1
+              )
+            ) {
+              let finded = datainmatching.find(
+                o => o.column1.trim().toString() === rawdata[i].column1
+              )
+              datainmatching = datainmatching.filter(
+                el => el.key !== finded.key
+              )
+              datainmatching.filter
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                color: `text-red-600 bg-red-300`,
+                bg: `bg-red-300`
+              })
+            } else {
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                color: `text-green-600 bg-green-300`,
+                bg: `bg-green-300`
+              })
+            }
+            break
+
+          case 2:
+            // console.log('in here case 2');
+            if (
+              datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2
+              )
+            ) {
+              let finded =   datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2
+              )
+               datainmatching = datainmatching.filter(
+                el => el.key !== finded.key
+              )
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                color: `text-red-600 bg-red-300`,
+                bg: `bg-red-300`
+              })
+            } else {
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                color: `text-green-600 bg-green-300`,
+                bg: `bg-green-300`
+              })
+            }
+            break
+          case 3:
+            if (
+              datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2 &&
+                  o.column3.trim().toString() === rawdata[i].column3
+              )
+            ) {
+              let finded = datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2 &&
+                  o.column3.trim().toString() === rawdata[i].column3
+              );
+              datainmatching = datainmatching.filter(
+                el => el.key !== finded.key
+              )
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                column3: rawdata[i].column3,
+                color: `text-red-600 bg-red-300`,
+                bg: `bg-red-300`
+              })
+            } else {
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                column3: rawdata[i].column3,
+                color: `text-green-600 bg-green-300`,
+                bg: `bg-green-300`
+              })
+            }
+            break
+          case 4:
+            if (
+              datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2 &&
+                  o.column3.trim().toString() === rawdata[i].column3 &&
+                  o.column4.trim().toString() === rawdata[i].column4
+              )
+            ) {
+
+              let finded  = datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2 &&
+                  o.column3.trim().toString() === rawdata[i].column3 &&
+                  o.column4.trim().toString() === rawdata[i].column4
+              )
+              datainmatching = datainmatching.filter(
+                el => el.key !== finded.key
+              )
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                column3: rawdata[i].column3,
+                column4: rawdata[i].column4,
+                color: `text-red-600 bg-red-300`,
+                bg: `bg-red-300`
+              })
+            } else {
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                column3: rawdata[i].column3,
+                column4: rawdata[i].column4,
+                color: `text-green-600 bg-green-300`,
+                bg: `bg-green-300`
+              })
+            }
+            break
+          case 5:
+            if (
+              datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2 &&
+                  o.column3.trim().toString() === rawdata[i].column3 &&
+                  o.column4.trim().toString() === rawdata[i].column4 &&
+                  o.column5.trim().toString() === rawdata[i].column5
+              )
+            ) {
+              let finded = datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2 &&
+                  o.column3.trim().toString() === rawdata[i].column3 &&
+                  o.column4.trim().toString() === rawdata[i].column4 &&
+                  o.column5.trim().toString() === rawdata[i].column5
+              )
+              datainmatching = datainmatching.filter(
+                el => el.key !== finded.key
+              )
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                column3: rawdata[i].column3,
+                column4: rawdata[i].column4,
+                column5: rawdata[i].column5,
+                color: `text-red-600 bg-red-300`,
+                bg: `bg-red-300`
+              })
+            } else {
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                column3: rawdata[i].column3,
+                column4: rawdata[i].column4,
+                column5: rawdata[i].column5,
+                color: `text-green-600 bg-green-300`,
+                bg: `bg-green-300`
+              })
+            }
+            break
+          case 6:
+            if (
+              datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2 &&
+                  o.column3.trim().toString() === rawdata[i].column3 &&
+                  o.column4.trim().toString() === rawdata[i].column4 &&
+                  o.column5.trim().toString() === rawdata[i].column5 &&
+                  o.column6.trim().toString() === rawdata[i].column6
+              )
+            ) {
+              let finded = datainmatching.find(
+                o =>
+                  o.column1.trim().toString() === rawdata[i].column1 &&
+                  o.column2.trim().toString() === rawdata[i].column2 &&
+                  o.column3.trim().toString() === rawdata[i].column3 &&
+                  o.column4.trim().toString() === rawdata[i].column4 &&
+                  o.column5.trim().toString() === rawdata[i].column5 &&
+                  o.column6.trim().toString() === rawdata[i].column6
+              )
+              datainmatching = datainmatching.filter(
+                el => el.key !== finded.key
+              )
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                column3: rawdata[i].column3,
+                column4: rawdata[i].column4,
+                column5: rawdata[i].column5,
+                column6: rawdata[i].column6,
+                color: `text-red-600 bg-red-300`,
+                bg: `bg-red-300`
+              })
+            } else {
+              callBackData.push({
+                key: i,
+                column1: rawdata[i].column1,
+                column2: rawdata[i].column2,
+                column3: rawdata[i].column3,
+                column4: rawdata[i].column4,
+                column5: rawdata[i].column5,
+                column6: rawdata[i].column6,
+                color: `text-green-600 bg-green-300`,
+                bg: `bg-green-300`
+              })
+            }
+            break
         }
       }
       return callBackData
